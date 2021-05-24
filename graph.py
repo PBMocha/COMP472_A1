@@ -1,7 +1,6 @@
 import numpy as np
 from typing import List, Dict, Tuple, Type
 import matplotlib.pyplot as plt
-import json
 # Global Constants
 
 # BLOCK TYPES
@@ -20,9 +19,8 @@ class Node:
 
 class Edge:
 
-    def __init__(self, node: Node, adj_blocks={}, cost=0):
+    def __init__(self, node: Node, adj_blocks: Dict={}, cost=0):
         self.node = node
-
 
 class Graph:
     def __init__(self):
@@ -31,26 +29,24 @@ class Graph:
     def createGrid(self, row: int, col: int):
 
         # Initialize nodes 
-        for node in range(row*col):
-            self.graph[node] = Node(node, [])
+        # for node in range(row*col):
+        #     self.graph[node] = Node(node, [])
         print(f"Adding vertices: {self.graph.keys()}")
 
-        # Connect horizontal edges
-        offset_col = 0
-        for _ in range(row):
-            for v in range(offset_col, offset_col+col-1):
-                print(f"Connecting: {v} and {v+1}")
-                self.graph[v].adj_list.append(v+1)
-                self.graph[v+1].adj_list.append(v)
+        for y in range(row):
+            for x in range(col):
+                self.graph[(x, y)] = Node((x,y), [])
 
-            
-            # Set offset to next row
-            offset_col += col
+        for y in range(row):
+            for x in range(col-1):
+                self.graph[(x, y)].adj_list.append((x+1, y))
+                self.graph[(x+1, y)].adj_list.append((x,y))
 
-        # Connect vertical edges
-        for v in range(len(self.graph.keys())-col):
-            self.graph[v].adj_list.append(v+col)
-            self.graph[v+col].adj_list.append(v)
+        for x in range(col):
+            for y in range(row-1):
+                self.graph[(x, y+1)].adj_list.append((x, y))
+                self.graph[(x, y)].adj_list.append((x,y+1))
+
 
     def getNode(self, key):
         return self.graph[key]
@@ -71,7 +67,7 @@ class Map:
         self.graph.createGrid(self.row+1, self.col+1)
 
 
-map = Map(2, 1)
+map = Map(2, 2)
 map.generateGraph()
 grid = map.graph
 
