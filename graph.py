@@ -100,7 +100,20 @@ class Graph:
                 self.graph[(x, y+1)].adj_list.append(edge_1)
                 self.graph[(x, y)].adj_list.append(edge_2)
         
-    
+        #Diagonal connections for ROLE V
+        for y in range(row-1):
+            for x in range(col-1):
+                edge_ac = Edge((x,y), roles=[], between=[map[y,x]])
+                edge_ca = Edge((x+1, y+1), roles=[], between=[map[y,x]])
+                
+                edge_bd = Edge((x+1, y), roles=[], between=[map[y,x]])
+                edge_db = Edge((x, y+1), roles=[], between=[map[y,x]])
+
+                self.graph[(x, y)].adj_list.append(edge_ca)
+                self.graph[(x+1, y+1)].adj_list.append(edge_ac)
+                self.graph[(x+1, y)].adj_list.append(edge_db)
+                self.graph[(x, y+1)].adj_list.append(edge_bd)
+        
 
         #print(f"Adding vertices: {self.graph.keys()}")
 
