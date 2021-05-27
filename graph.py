@@ -34,7 +34,7 @@ class Edge:
         self.cost = cost
 
     def __str__(self) -> str:
-        return f"{self.node}/between: {self.between}"
+        return f"({self.node}-cost:{self.cost}-between: {self.between})"
 
 class Map:
 
@@ -46,13 +46,14 @@ class Map:
         self.map = np.random.choice(self.block_types, size=(row, col))
         self.graph = Graph()
 
+    def getGraph(self):
+        return self.graph.graph
+
     def generateGraph(self):
         self.graph.createGrid(self.row+1, self.col+1, self.map)
-
-    def populate():
-
-        pass
-
+    
+    def setCosts(self, role: Dict[str, int]):
+        self.graph.setCosts(role)
 
 class Graph:
     def __init__(self):
@@ -117,16 +118,37 @@ class Graph:
 
         #print(f"Adding vertices: {self.graph.keys()}")
 
+    def setCosts(self, role: Dict[str, int]):
+        for _, node in self.graph.items():
+            for edge in node.adj_list:
+                # edge = avg(block_1, block_2)
+                total = 0
+                blocks = 0
+                for adj_type in edge.between:
+                    total += role[adj_type]
+                    blocks += 1
+                
+                edge.cost = float(total/blocks)
+
     def getNode(self, key: Tuple[int,int]):
         return self.graph[key]
 
     def view(self):
         for v, val in self.graph.items():
-            print(self.graph[v])
+            print(val)
 
-map = Map(2, 2)
+map = Map(3, 3)
 print(map.map)
 map.generateGraph()
+
+role_c = {
+    "Quarantine": 0, 
+    "Vaccine": 2, 
+    "Play": 3,
+    "None": 1 
+}
+
+map.setCosts(role_c)
 grid = map.graph
 grid.view()
 # for key, node in grid.graph.items():
