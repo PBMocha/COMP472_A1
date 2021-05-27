@@ -1,29 +1,12 @@
 import numpy as np
 from typing import List, Dict, Tuple, Type
 import matplotlib.pyplot as plt
+from math import sqrt
 # Global Constants
 
 # BLOCK TYPES
 
-class Node:
 
-    def __init__(self, key, adj_list: List = []):
-        self.key = key
-        self.adj_list = adj_list
-
-    def getEdge(self, dest):
-        pass
-
-    def isEdgeAdjTo(self, node, block: str):
-        pass
-    
-    def __str__(self) -> str:
-
-        edge_str = ""
-        for edge in self.adj_list:
-            edge_str += f"{edge}, "
-
-        return f"{self.key} -> {edge_str}"
 
 class Edge:
 
@@ -35,6 +18,33 @@ class Edge:
 
     def __str__(self) -> str:
         return f"({self.node}-cost:{self.cost}-between: {self.between})"
+
+class Node:
+
+    def __init__(self, key: Tuple[int,int], adj_list: List[Edge] = []):
+        self.key = key
+        self.adj_list = adj_list
+
+    def edgesAsList(self) -> List[Tuple[int,int]]:
+        return [edge.node for edge in self.adj_list]
+
+    def getEdge(self, dest: Tuple[int,int]):
+        for edge in self.adj_list:
+            if edge.node == dest:
+                return edge
+            
+        return None
+
+    def isEdgeAdjTo(self, node, block: str):
+        pass
+    
+    def __str__(self) -> str:
+
+        edge_str = ""
+        for edge in self.adj_list:
+            edge_str += f"{edge}, "
+
+        return f"{self.key} -> {edge_str}"
 
 class Map:
 
@@ -57,7 +67,7 @@ class Map:
 
 class Graph:
     def __init__(self):
-        self.graph: Dict = {}
+        self.graph: Dict[Tuple[int,int], Node] = {}
 
     def createGrid(self, row: int, col: int, map):
 
@@ -104,31 +114,42 @@ class Graph:
         #Diagonal connections for ROLE V
         for y in range(row-1):
             for x in range(col-1):
-                edge_ac = Edge((x,y), roles=[], between=[map[y,x]])
-                edge_ca = Edge((x+1, y+1), roles=[], between=[map[y,x]])
                 
-                edge_bd = Edge((x+1, y), roles=[], between=[map[y,x]])
-                edge_db = Edge((x, y+1), roles=[], between=[map[y,x]])
+                edge_ac = Edge((x,y), roles=["V"], between=[map[y,x]])
+                edge_ca = Edge((x+1, y+1), roles=["V"], between=[map[y,x]])
+                
+                edge_bd = Edge((x+1, y), roles=["V"], between=[map[y,x]])
+                edge_db = Edge((x, y+1), roles=["V"], between=[map[y,x]])
 
                 self.graph[(x, y)].adj_list.append(edge_ca)
                 self.graph[(x+1, y+1)].adj_list.append(edge_ac)
                 self.graph[(x+1, y)].adj_list.append(edge_db)
                 self.graph[(x, y+1)].adj_list.append(edge_bd)
-        
+            
 
-        #print(f"Adding vertices: {self.graph.keys()}")
+
+
 
     def setCosts(self, role: Dict[str, int]):
         for _, node in self.graph.items():
             for edge in node.adj_list:
                 # edge = avg(block_1, block_2)
-                total = 0
-                blocks = 0
-                for adj_type in edge.between:
-                    total += role[adj_type]
-                    blocks += 1
-                
-                edge.cost = float(total/blocks)
+                if "V" not in edge.roles:
+                    total = 0
+                    blocks = 0
+                    for adj_type in edge.between:
+                        total += role[adj_type]
+                        blocks += 1
+                    
+                    edge.cost = float(total/blocks)
+        
+        for _, node in self.graph.items():
+            for edge in node.adj_list:
+                # edge = avg(block_1, block_2)
+                if "V" in edge.roles:
+                    edge.cost = diagonalCost(node, self.graph[edge.node])
+
+        
 
     def getNode(self, key: Tuple[int,int]):
         return self.graph[key]
@@ -136,6 +157,23 @@ class Graph:
     def view(self):
         for v, val in self.graph.items():
             print(val)
+
+
+def diagonalCost(node_a: Node, node_b: Node):
+
+    #Get intersection
+    inter = list(set(node_a.edgesAsList())&set(node_b.edgesAsList()))
+
+    results = []
+    for coord in inter:
+        cost_a = node_a.getEdge(coord).cost
+        cost_b = node_b.getEdge(coord).cost
+
+        result = float(sqrt(cost_a + cost_b))
+        results.append(result)
+
+    return max(results)
+
 
 map = Map(3, 3)
 print(map.map)
