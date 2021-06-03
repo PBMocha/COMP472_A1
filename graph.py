@@ -6,8 +6,6 @@ from math import sqrt
 
 # BLOCK TYPES
 
-
-
 class Edge:
 
     def __init__(self, node: Tuple[int, int], roles: List[str]=[], between: List[str]=[], cost=0):
@@ -22,7 +20,11 @@ class Edge:
 class Node:
 
     def __init__(self, key: Tuple[int,int], adj_list: List[Edge] = []):
-        self.key = key
+        self.pos = key
+        self.h_cost = 0
+        self.g_cost = float('inf')
+        self.f_cost = 0
+        self.parent:Tuple[int, int]=None
         self.adj_list = adj_list
 
     def edgesAsList(self) -> List[Tuple[int,int]]:
@@ -44,7 +46,7 @@ class Node:
         for edge in self.adj_list:
             edge_str += f"{edge}, "
 
-        return f"{self.key} -> {edge_str}"
+        return f"{self.pos} -> {edge_str}"
 
 class Map:
 
@@ -68,6 +70,10 @@ class Map:
 class Graph:
     def __init__(self):
         self.graph: Dict[Tuple[int,int], Node] = {}
+
+    def getNodeList(self):
+        return self.graph.keys()
+    
 
     def createGrid(self, row: int, col: int, map):
 
@@ -126,10 +132,6 @@ class Graph:
                 self.graph[(x+1, y)].adj_list.append(edge_db)
                 self.graph[(x, y+1)].adj_list.append(edge_bd)
             
-
-
-
-
     def setCosts(self, role: Dict[str, int]):
         for _, node in self.graph.items():
             for edge in node.adj_list:
@@ -169,26 +171,26 @@ def diagonalCost(node_a: Node, node_b: Node):
         cost_a = node_a.getEdge(coord).cost
         cost_b = node_b.getEdge(coord).cost
 
-        result = float(sqrt(cost_a + cost_b))
+        result = float(sqrt(cost_a**2 + cost_b**2))
         results.append(result)
 
     return max(results)
 
 
-map = Map(3, 3)
-print(map.map)
-map.generateGraph()
+# map = Map(3, 3)
+# print(map.map)
+# map.generateGraph()
 
-role_c = {
-    "Quarantine": 0, 
-    "Vaccine": 2, 
-    "Play": 3,
-    "None": 1 
-}
+# role_c = {
+#     "Quarantine": 0, 
+#     "Vaccine": 2, 
+#     "Play": 3,
+#     "None": 1 
+# }
 
-map.setCosts(role_c)
-grid = map.graph
-grid.view()
+# map.setCosts(role_c)
+# grid = map.graph
+# grid.view()
 # for key, node in grid.graph.items():
 #     print(f"{key}: {node.adj_list}") 
 
