@@ -1,4 +1,4 @@
-from evaluateRoleV import evaluateRoleV
+from evaluateRoleV import evaluateRoleV, roleVHeuristic
 from graph import Map, Graph
 
 def main():
@@ -18,12 +18,15 @@ def main():
     
     graph.view()
 
-    evaluateRoleV(map, (), (), lambda x,y: 0, role_c)
+    start = (0,0)
+    end = (2,4)
 
+    res = evaluateRoleV(map, start, end, roleVHeuristic, role_c)
+
+    print(res)
     
 
     
 
 
-if __name__ == "main":
-    main()
+main()

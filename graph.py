@@ -22,7 +22,7 @@ class Node:
     def __init__(self, key: Tuple[int,int], adj_list: List[Edge] = []):
         self.pos = key
         self.h_cost = 0
-        self.g_cost = float('inf')
+        self.g_cost = 999
         self.f_cost = 0
         self.parent:Tuple[int, int]=None
         self.adj_list = adj_list
@@ -47,6 +47,9 @@ class Node:
             edge_str += f"{edge}, "
 
         return f"{self.pos} -> {edge_str}"
+    
+    def __lt__(self, other):
+        return self.f_cost < other.f_cost
 
 class Map:
 
@@ -59,7 +62,7 @@ class Map:
         self.graph = Graph()
 
     def getGraph(self):
-        return self.graph.graph
+        return self.graph
 
     def generateGraph(self):
         self.graph.createGrid(self.row+1, self.col+1, self.map)
