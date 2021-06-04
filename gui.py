@@ -12,7 +12,7 @@ def viewMap(map: gph.Map):
         "Quarantine": "green", 
         "Vaccine": "red", 
         "None" : "grey", 
-        "Play": "blue"
+        "Play": "yellow"
         }
 
     #networkx to display graph
@@ -22,6 +22,13 @@ def viewMap(map: gph.Map):
     G_view.add_nodes_from([(n, {'label':n}) for n in graph.getNodeList()], color="grey", size=10, font_size=12)
     G_view.add_edges_from(graph.getEdgeList("V"))
 
+    #print(G_view.edges())
+    edge_labels = {}
+    for edge in G_view.edges():
+        src, des = edge
+        edge_labels[edge] = graph.graph[src].getEdge(des).cost        
+    print(edge_labels)
+    #edge_labels = {edge:label }
     #Adds nodes relating to labelling types of blocks
     block_nodes = []
     
@@ -41,8 +48,9 @@ def viewMap(map: gph.Map):
     node_labels = dict(zip(G_view.nodes(), nx.get_node_attributes(G_view, 'label').values()))
 
     nx.draw(G_view,pos, node_color=colors.values())
-    nx.draw_networkx_labels(G_view, pos, labels=node_labels)
-    #nx.draw_networkx_edge_labels(G_view, edge_labels=None)
+    nx.draw_networkx_labels(G_view, pos, labels=node_labels, font_size=6)
+    nx.draw_networkx_edge_labels(G_view, pos, edge_labels=edge_labels, label_pos=0.5)
+
     plt.show()
 
 def viewResults(map: gph.Map, results: List[Tuple[int,int]]):
