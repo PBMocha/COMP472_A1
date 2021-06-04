@@ -6,5 +6,5 @@
 - [numpy](https://numpy.org/)
 - [matplotlib](https://matplotlib.org/)
 - [math](https://docs.python.org/3/library/math.html)
-- [networkx] (https://networkx.org/)
+- [networkx](https://networkx.org/)
 

@@ -70,13 +70,24 @@ class Map:
     def setCosts(self, role: Dict[str, int]):
         self.graph.setCosts(role)
 
+
 class Graph:
+
     def __init__(self):
         self.graph: Dict[Tuple[int,int], Node] = {}
 
     def getNodeList(self):
         return self.graph.keys()
     
+    def getEdgeList(self, filter:str=""):
+        edges = []
+
+        for pos, node in self.graph.items():
+            for neighbor in node.adj_list:
+                if filter not in neighbor.roles:
+                    edges.append((pos, neighbor.node))
+
+        return edges
 
     def createGrid(self, row: int, col: int, map):
 

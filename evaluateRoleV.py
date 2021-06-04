@@ -18,8 +18,6 @@ def evaluateRoleV(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
     open_list = []
     closed = []
 
-    
-
     hq.heappush(open_list, (start_n.f_cost, start_n))
 
     while len(open_list) > 0:
