@@ -20,7 +20,7 @@ def viewMap(map: gph.Map):
 
     #Adds grid
     G_view.add_nodes_from([(n, {'label':n}) for n in graph.getNodeList()], color="grey", size=10, font_size=12)
-    G_view.add_edges_from(graph.getEdgeList("V"))
+    G_view.add_edges_from(graph.getEdgeList())
 
     #print(G_view.edges())
     edge_labels = {}

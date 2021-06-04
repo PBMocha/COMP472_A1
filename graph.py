@@ -163,7 +163,7 @@ class Graph:
             for edge in node.adj_list:
                 # edge = avg(block_1, block_2)
                 if "V" in edge.roles:
-                    edge.cost = diagonalCost(node, self.graph[edge.node])
+                    edge.cost = round(diagonalCost(node, self.graph[edge.node]), 2)
 
         
 
