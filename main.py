@@ -4,7 +4,7 @@ import gui
 
 def main():
     
-    map:Map = Map(2,5)
+    map:Map = Map(5,5)
     
     map.generateGraph()
 
@@ -16,8 +16,15 @@ def main():
     }
 
     map.setCosts(role_c)
-
     gui.viewMap(map)
+
+    start = (0,0)
+    end = (2,4)
+
+    res = evaluateRoleV(map, start, end, roleVHeuristic, role_c)
+    print(res)
+
+    gui.viewResults(map,res)
 
     # map.setCosts(role_c)
 
@@ -25,10 +32,7 @@ def main():
     
     # graph.view()
 
-    # start = (0,0)
-    # end = (2,4)
-
-    # res = evaluateRoleV(map, start, end, roleVHeuristic, role_c)
+    
 
     # print(res)
     

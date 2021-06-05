@@ -34,8 +34,8 @@ def evaluateRoleV(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
         
         #Find all children where the dege is not between a quarantine place
         for edge in cur_node.adj_list:
-            if edge.between.count("Quarantine") > 0:
-                continue
+            # if edge.between.count("Quarantine") > 0:
+            #     continue
             valid_paths.append(edge)
 
         #For each neighbor of current node
