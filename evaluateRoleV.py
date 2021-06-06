@@ -8,7 +8,7 @@ import heapq as hq
 from graph import *
 
 
-def evaluateRoleV(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristic, role: Dict) -> List[Tuple[int,int]]:
+def evaluateRoleV(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristic) -> List[Tuple[int,int]]:
     
     graph = map.getGraph().graph
 
@@ -23,7 +23,7 @@ def evaluateRoleV(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
     while len(open_list) > 0:
         
         f, node_k = hq.heappop(open_list)
-        cur_node = node_k
+        cur_node: Node = node_k
         closed.append(node_k.pos)
 
         #if goal is found, traverse path back to start from goal
@@ -31,11 +31,11 @@ def evaluateRoleV(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
             return backtrack_path(graph, cur_node, start_n)
         
         valid_paths: List[Edge] = []
-        
+
         #Find all children where the dege is not between a quarantine place
         for edge in cur_node.adj_list:
-            # if edge.between.count("Quarantine") > 0:
-            #     continue
+            if edge.between.count("Quarantine") > 0:
+                continue
             valid_paths.append(edge)
 
         #For each neighbor of current node
@@ -71,3 +71,4 @@ def backtrack_path(graph, start:Node, end:Node):
     
 def roleVHeuristic(start:Tuple[int,int], end:Tuple[int,int]):
     return sqrt((start[0]-end[0])**2 + (start[1]-end[1])**2)
+    #return 0

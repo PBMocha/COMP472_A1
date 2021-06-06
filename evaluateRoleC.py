@@ -8,7 +8,7 @@ import heapq as hq
 from graph import *
 
 
-def evaluateRoleC(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristic, role: Dict) -> List[Tuple[int,int]]:
+def evaluateRoleC(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristic) -> List[Tuple[int,int]]:
     
     graph = map.getGraph().graph
 
@@ -36,7 +36,7 @@ def evaluateRoleC(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
         
         #Find all children where the edge is not between a Vaccination or PLayground area place
         for edge in cur_node.adj_list:
-            if (edge.between.count("Vaccine") > 0 | edge.between.count("Play") > 0):
+            if (edge.between.count("Vaccine") > 0 | edge.between.count("Play") > 0) or "V" in edge.roles:
                 continue
             valid_paths.append(edge)
 
@@ -71,5 +71,5 @@ def backtrack_path(graph, start:Node, end:Node):
     result.append(end.pos)
     return result[::-1]            
     
-def roleVHeuristic(start:Tuple[int,int], end:Tuple[int,int]):
+def roleCHeuristic(start:Tuple[int,int], end:Tuple[int,int]):
     return sqrt((start[0]-end[0])**2 + (start[1]-end[1])**2)

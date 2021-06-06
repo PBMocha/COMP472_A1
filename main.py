@@ -16,25 +16,21 @@ def main():
     }
 
     map.setCosts(role_c)
-    gui.viewMap(map)
+    gui.viewMap(map, filter="V")
 
     start = (0,0)
     end = (2,4)
 
-    res = evaluateRoleV(map, start, end, roleVHeuristic, role_c)
+    res = evaluateRoleV(map, start, end, roleVHeuristic)
+
+    if not res:
+        print('No Path was found')
+        return
+
     print(res)
 
-    gui.viewResults(map,res)
+    gui.viewMap(map,res,filter="V")
 
-    # map.setCosts(role_c)
-
-    # graph: Graph = map.getGraph()
-    
-    # graph.view()
-
-    
-
-    # print(res)
     
 
     
