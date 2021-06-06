@@ -71,5 +71,4 @@ def backtrack_path(graph, start:Node, end:Node):
     return result[::-1]            
     
 def roleCHeuristic(start:Tuple[int,int], end:Tuple[int,int]):
-    #return sqrt((start[0]-end[0])**2 + (start[1]-end[1])**2)
-    return 0
+    return abs(end[0]-start[0]) + abs(end[1]-start[1])

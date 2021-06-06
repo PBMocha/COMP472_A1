@@ -25,7 +25,7 @@ If no path is found, the functions return None
 * START: Top right node of the starting block
 * GOAL/DEST: A Quarantine spot, at the top right node of that block
 
-    Heuristic: Uses zero heuristic, h(n) = 0
+    Heuristic: h(n) = abs(x2-x1) + abs(y2-y1)
 
 ### Role V
 * Avoids: edges adjacent to Quarantine areas
