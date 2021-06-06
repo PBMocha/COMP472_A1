@@ -17,7 +17,6 @@ def evaluateRoleC(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
 
     open_list = []
     closed = []
-
     
 
     hq.heappush(open_list, (start_n.f_cost, start_n))
@@ -36,7 +35,7 @@ def evaluateRoleC(map: Map, start:Tuple[int, int], end: Tuple[int,int], heuristi
         
         #Find all children where the edge is not between a Vaccination or PLayground area place
         for edge in cur_node.adj_list:
-            if (edge.between.count("Vaccine") > 0 | edge.between.count("Play") > 0) or "V" in edge.roles:
+            if edge.between.count("Vaccine") > 0 or edge.between.count("Play") > 1 or "V" in edge.roles:
                 continue
             valid_paths.append(edge)
 
@@ -72,4 +71,5 @@ def backtrack_path(graph, start:Node, end:Node):
     return result[::-1]            
     
 def roleCHeuristic(start:Tuple[int,int], end:Tuple[int,int]):
-    return sqrt((start[0]-end[0])**2 + (start[1]-end[1])**2)
+    #return sqrt((start[0]-end[0])**2 + (start[1]-end[1])**2)
+    return 0
