@@ -12,6 +12,7 @@
 Used for creating the structure for the graphs
     
     Map(row, col) = creates the grid map that stores the blocks in a 2D array
+    map.setPreset(dict) = Sets the different block types inside the map
     map.generateGrid() = creates a Graph data structure that represents the outer edges of the map
     map.setCosts(role) = Sets the costs of the edges depending on the role 
 
