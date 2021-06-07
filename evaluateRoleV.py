@@ -1,3 +1,9 @@
+# -------------------------------------------------------
+# Assignment 1
+# Written by Joshua Parial-Bolusan (40063663) Jeffrey Lam (40090989)
+# For COMP 472 Section (your lab section) – Summer 2021
+# --------------------------------------------------------
+
 import math
 from types import LambdaType
 import numpy as np

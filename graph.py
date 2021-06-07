@@ -1,3 +1,9 @@
+# -------------------------------------------------------
+# Assignment 1
+# Written by Joshua Parial-Bolusan (40063663) Jeffrey Lam (40090989)
+# For COMP 472 Section (your lab section) – Summer 2021
+# --------------------------------------------------------
+
 import numpy as np
 from typing import List, Dict, Tuple, Type
 import matplotlib.pyplot as plt

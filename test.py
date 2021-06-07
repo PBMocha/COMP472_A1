@@ -2,7 +2,7 @@ from evaluateRoleV import evaluateRoleV, roleVHeuristic
 from graph import Map, Graph
 import gui
 
-def main():
+def test():
     
     map:Map = Map(5,5)
     
@@ -34,4 +34,4 @@ def main():
     
 
     
-main()
+test()
