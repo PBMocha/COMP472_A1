@@ -15,6 +15,9 @@ Used for creating the structure for the graphs
     map.generateGrid() = creates a Graph data structure that represents the outer edges of the map
     map.setCosts(role) = Sets the costs of the edges depending on the role 
 
+## Running the program:
+open project.ipynb using jupyter. Follow the instructions inside the juptyer notebook.
+
 ## Search Evaluations
 Both use an informed A* algorithm for searching. Both search functions utilizes different Heuristics for determining the solution path. Both evaluation functions return a list of nodes ordered as a path.
 

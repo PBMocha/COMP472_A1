@@ -58,8 +58,8 @@ class Map:
     def __init__(self, row, col):
         self.row = row
         self.col = col
-        self.map = np.random.choice(self.block_types, size=(row, col))
-        self.graph = Graph()
+        self.map = np.full((row, col), "None", dtype='U12')#np.random.choice(self.block_types, size=(row, col))
+        self.graph: Graph = Graph()
 
     def getGraph(self):
         return self.graph
@@ -69,7 +69,15 @@ class Map:
     
     def setCosts(self, role: Dict[str, int]):
         self.graph.setCosts(role)
+    
+    def randomizeGrid(self):
+        self.map = np.random.choice(self.block_types, size=self.map.shape)
 
+    def setPreset(self, map_preset:Dict[str,List[Tuple[int,int]]]):
+
+        for area_type in map_preset.keys():
+            for loc in map_preset[area_type]:
+                self.map[loc[1], loc[0]] = area_type
 
 class Graph:
 

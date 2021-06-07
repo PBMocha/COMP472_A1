@@ -67,7 +67,7 @@ def backtrack_path(graph, start:Node, end:Node):
         result.append(cur.pos)
         cur = graph[cur.parent]
     result.append(end.pos)
-    return result[::-1]            
+    return result[::-1]  
     
 def roleVHeuristic(start:Tuple[int,int], end:Tuple[int,int]):
     return sqrt((start[0]-end[0])**2 + (start[1]-end[1])**2)
